@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+class Startup
+{
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        decimal totalPrice = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            decimal price = decimal.Parse(Console.ReadLine());
+            DateTime date = DateTime.ParseExact(Console.ReadLine(), "d/M/yyyy", CultureInfo.InvariantCulture);
+            decimal casuls = decimal.Parse(Console.ReadLine());
+
+            decimal days = DateTime.DaysInMonth(date.Year, date.Month);
+
+            decimal priceCoffee = days * casuls * price;
+
+            Console.WriteLine($"The price for the coffee is: ${priceCoffee:f2}");
+
+            totalPrice += priceCoffee;
+        }
+        Console.WriteLine($"Total: ${totalPrice:f2}");
+    }
+}
+
+
+
+
+
+
