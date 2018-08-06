@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+class Startup
+{
+    static void Main()
+    {
+        int lostGameCount = int.Parse(Console.ReadLine());
+        double headsetPrice = double.Parse(Console.ReadLine());
+        double mousePrice = double.Parse(Console.ReadLine());
+        double keyboardPrice = double.Parse(Console.ReadLine());
+        double displayPrice = double.Parse(Console.ReadLine());
+
+        long headsetCount = 0;
+        long mouseCount = 0;
+        long keyboardCount = 0;
+        long displayCount = 0;
+        bool isTrue = false;
+        bool keyIn = false;
+        long count = 0;
+        long count1 = 0;
+
+        for (int i = 1; i <= lostGameCount; i++)
+        {
+            if (i % 2 == 0)
+            {
+                headsetCount++;
+                count += 2;
+                isTrue = true;
+            }
+
+            if (i % 3 == 0)
+            {
+                mouseCount++;
+                count1 += 3;
+                isTrue = true;
+            }
+
+            if (isTrue && count == count1)
+            {
+                keyboardCount++;
+                keyIn = true;
+            }
+
+            if (keyboardCount % 2 == 0 && keyIn)
+            {
+                displayCount++;
+            }
+
+            isTrue = false;
+            keyIn = false;
+        }
+
+        double rageExpensesHeadset = headsetCount * headsetPrice; 
+        double rageExpensesMouse = mouseCount * mousePrice; 
+        double rageExpensesKeyboard = keyboardCount * keyboardPrice; 
+        double rageExpensesDisplay = displayCount * displayPrice;
+
+        double totalRageExpenses = rageExpensesDisplay + rageExpensesHeadset + rageExpensesKeyboard + rageExpensesMouse;
+
+        Console.WriteLine("Rage expenses: {0:f2} lv.", totalRageExpenses);  
+    }
+}
