@@ -1,0 +1,137 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+class Startup
+{
+    static void Main()
+    {
+        var sequences = Console.ReadLine()
+            .Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+            .ToList();
+
+        string input = string.Empty;
+
+        while ((input = Console.ReadLine()) != "end")
+        {
+            var curInut = input
+            .Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+            .ToList();
+            string command = curInut[0];
+
+            switch (command)
+            {
+                case "reverse":
+
+                    int startRevers = int.Parse(curInut[2]);
+                    int endRevers = int.Parse(curInut[4]);
+                    //1 2 3 4 5 6 7
+                    if (startRevers < 0 || startRevers >= sequences.Count ||
+                        startRevers + endRevers - 1 >= sequences.Count || startRevers + endRevers < 0 ||
+                        endRevers < 0)
+                    {
+                        Console.WriteLine("Invalid input parameters.");
+                        continue;
+                    }
+
+                    Reverse(sequences, startRevers, endRevers);
+
+                    break;
+                case "sort":
+
+                    int startSort = int.Parse(curInut[2]);
+                    int endSort = int.Parse(curInut[4]);
+
+                    if (startSort < 0 || startSort >= sequences.Count ||
+                        startSort + endSort - 1 >= sequences.Count || startSort + endSort < 0 ||
+                       endSort < 0)
+                    {
+                        Console.WriteLine("Invalid input parameters.");
+                        continue;
+                    }
+
+                    Sort1(sequences, startSort, endSort);
+
+                    break;
+                case "rollLeft":
+
+                    int indexRollLeft = int.Parse(curInut[1]);
+
+                    if (indexRollLeft < 0)
+                    {
+                        Console.WriteLine("Invalid input parameters.");
+                        continue;
+                    }
+
+                    RollLeftTime(sequences, indexRollLeft);
+
+                    break;
+                case "rollRight":
+
+                    int indexRollRight = int.Parse(curInut[1]);
+
+                    if (indexRollRight < 0)
+                    {
+                        Console.WriteLine("Invalid input parameters.");
+                        continue;
+                    }
+
+                    RoleRight(sequences, indexRollRight);
+
+                    break;
+            }
+        }
+
+        Console.WriteLine("[{0}]", string.Join(", ", sequences));
+    }
+
+    static void RoleRight(List<string> sequences, int indexRollRight)
+    {
+        long curIndexMove = indexRollRight % sequences.Count;
+
+        for (int i = 0; i < curIndexMove; i++)
+        {
+            string temt = sequences[sequences.Count - 1];
+
+            for (int j = sequences.Count - 1; j > 0; j--)
+            {
+                sequences[j] = sequences[j - 1];
+            }
+
+            sequences[0] = temt;
+        }
+    }
+
+    static void RollLeftTime(List<string> sequences, int indexRollLeft)
+    {
+        int curIndexMove = indexRollLeft % sequences.Count;
+
+        for (long i = curIndexMove; i > 0; i--)
+        {
+            string temt = sequences[0];
+
+            for (int j = 0; j < sequences.Count - 1; j++)
+            {
+                sequences[j] = sequences[j + 1];
+            }
+
+            sequences[sequences.Count - 1] = temt;
+        }
+    }
+
+    static void Sort1(List<string> sequences, int startIndex, int endIndex)
+    {
+        sequences.Sort(startIndex, endIndex, null);
+    }
+
+    static void Reverse(List<string> sequences, int startIndex, int endIndex)
+    {
+        sequences.Reverse(startIndex, endIndex);
+    }
+}
