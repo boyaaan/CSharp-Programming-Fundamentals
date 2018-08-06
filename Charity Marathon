@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+class Startup
+{
+    static void Main()
+    {
+        long days = long.Parse(Console.ReadLine());
+        long runners = long.Parse(Console.ReadLine());
+        long averageLapsForOneRunner = long.Parse(Console.ReadLine());
+        long lengthOfTrack = long.Parse(Console.ReadLine());
+        long capacityOfTrack = long.Parse(Console.ReadLine());
+        decimal money = decimal.Parse(Console.ReadLine());
+
+        long alldaysRunners = days * capacityOfTrack;
+
+        if (alldaysRunners > runners)
+        {
+            alldaysRunners = runners;
+        }
+
+        long totalMeters = alldaysRunners * averageLapsForOneRunner * lengthOfTrack;
+        long totalKilometers = totalMeters / 1000;
+        decimal totalMoney = money * totalKilometers;
+
+        Console.WriteLine($"Money raised: {totalMoney:f2}");
+    }
+}
+
+
+
+
+
