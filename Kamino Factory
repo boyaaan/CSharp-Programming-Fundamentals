@@ -1,0 +1,99 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+class Program
+{
+    private static int length;
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        var dna = new List<List<int>>();
+
+        string input = string.Empty;
+        while ((input = Console.ReadLine()) != "Clone them!")
+        {
+            var curInput = input.Split("!".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+
+            dna.Add(curInput);
+        }
+
+        int longestOne = 0;
+        int leftMostIndex = n;
+        int sum = 0;
+        int sample = 0;
+        string sequences = string.Empty;
+
+        for (int i = 0; i < dna.Count; i++)
+        {
+            int curOneSequences = 0;
+            int curLongestOne = 0;
+            int curLeftMostIndex = 0;
+            int curSum = dna[i].Sum();
+
+            for (int j = 0; j < n; j++)
+            {
+                if (dna[i][j] == 1)
+                {
+                    curOneSequences++;
+
+                    if (j == dna[i].Count - 1)
+                    {
+                        if (curOneSequences > curLongestOne)
+                        {
+                            curLongestOne = curOneSequences;
+                            curLeftMostIndex = j - curOneSequences;
+                        }
+                    }
+                }
+                else
+                {
+                    if (curOneSequences > curLongestOne)
+                    {
+                        curLongestOne = curOneSequences;
+                        curLeftMostIndex = j - curOneSequences;
+                    }
+
+                    curOneSequences = 0;
+                }
+            }
+
+            if (curLongestOne > longestOne)
+            {
+                longestOne = curLongestOne;
+                leftMostIndex = curLeftMostIndex;
+                sum = curSum;
+                sample = i + 1;
+                sequences = string.Join(" ",dna[i]);
+            }
+            else if (curLongestOne == longestOne)
+            {
+                if (curLeftMostIndex < leftMostIndex)
+                {
+                    leftMostIndex = curLeftMostIndex;
+                    sum = curSum;
+                    sample = i + 1;
+                    sequences = string.Join(" ", dna[i]);
+                }
+                else if (curLeftMostIndex == leftMostIndex)
+                {
+                    if (curSum > sum)
+                    {
+                        sum = curSum;
+                        sample = i + 1;
+                        sequences = string.Join(" ", dna[i]);
+                    }
+                }
+            }
+        }
+
+        Console.WriteLine($"Best DNA sample {sample} with sum: {sum}.");
+        Console.WriteLine(sequences);
+    }
+}
+
