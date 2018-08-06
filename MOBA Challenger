@@ -1,0 +1,94 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+class Startup
+{
+    static void Main()
+    {
+        var playerPool = new Dictionary<string, Dictionary<string, long>>();
+
+        string input = string.Empty;
+        while ((input = Console.ReadLine()) != "Season end")
+        {
+            if (input.Contains("->"))
+            {
+                var currInput = input.Split("-> ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+                var name = currInput[0];
+                var position = currInput[1];
+                var skill = long.Parse(currInput[2]);
+
+                if (!playerPool.ContainsKey(name))
+                {
+                    playerPool[name] = new Dictionary<string, long>();
+
+                }
+
+                if (!playerPool[name].ContainsKey(position))
+                {
+                    playerPool[name][position] = skill;
+                }
+                else
+                {
+                    if (playerPool[name][position] < skill)
+                    {
+                        playerPool[name][position] = skill;
+
+                    }
+                }
+
+
+            }
+            else
+            {
+                var currInput = input.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+                var name1 = currInput[0];
+                var name2 = currInput[2];
+
+                if (playerPool.ContainsKey(name1) && playerPool.ContainsKey(name2))
+                {
+                    string playerToRemove = string.Empty;
+
+                    foreach (var value1 in playerPool[name1])
+                    {
+                        foreach (var value2 in playerPool[name2])
+                        {
+                            if (value1.Key == value2.Key)
+                            {
+                                var first = playerPool[name1].Values.Sum();
+                                var second = playerPool[name2].Values.Sum();
+
+                                if (first > second)
+                                {
+                                    playerToRemove = name2;
+                                }
+                                else if (second > first)
+                                {
+                                    playerToRemove = name1;
+                                }
+
+                            }
+                        }
+                    }
+                    playerPool.Remove(playerToRemove);
+                }
+            }
+        }
+
+        
+        foreach (var player in playerPool.OrderByDescending(x => x.Value.Values.Sum()).ThenBy(x => x.Key))
+        {
+            Console.WriteLine($"{player.Key}: {(player.Value.Values.Sum())} skill");
+
+            foreach (var item in player.Value.OrderByDescending(x => x.Value).ThenBy(x => x.Key))
+            {
+                Console.WriteLine($"- {item.Key} <::> {item.Value}");
+            }
+        }
+    }
+}
