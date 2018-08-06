@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+class Startup
+{
+    static void Main()
+    {
+        decimal amount = decimal.Parse(Console.ReadLine());
+        decimal people = decimal.Parse(Console.ReadLine());
+        decimal priceBananas = decimal.Parse(Console.ReadLine());
+        decimal priceEggs = decimal.Parse(Console.ReadLine());
+        decimal priceBaries = decimal.Parse(Console.ReadLine());
+
+        decimal sets = Math.Ceiling(people / 6);
+        decimal allProducts = sets * (priceBananas * 2) + sets * (priceEggs * 4) + sets * (priceBaries * 0.2m);
+
+        if (allProducts <= amount)
+        {
+            Console.WriteLine($"Ivancho has enough money - it would cost {allProducts:f2}lv.");
+        }
+        else
+        {
+            Console.WriteLine($"Ivancho will have to withdraw money - he will need {Math.Abs(allProducts - amount):f2}lv more.");
+        }
+    }
+}
