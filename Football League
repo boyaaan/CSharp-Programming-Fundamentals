@@ -1,0 +1,79 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+class Startup
+{
+    static void Main()
+    {
+        string key = Regex.Escape(Console.ReadLine());
+        string pattern = $@"^.*(?:{key})(?<team1>[a-zA-Z]*)(?:{key}).* .*(?:{key})(?<team2>[a-zA-Z]*)(?:{key}).* (?<goal1>\d+):(?<goal2>\d+).*$";
+
+        var teams = new Dictionary<string, Legue>();
+
+        string input = string.Empty;
+        while ((input = Console.ReadLine()) != "final")
+        {
+            var match = Regex.Match(input, pattern);
+
+            var team1 = new string(match.Groups["team1"].Value.ToUpper().Reverse().ToArray());
+            var team2 = new string(match.Groups["team2"].Value.ToUpper().Reverse().ToArray());
+            var goalTeam1 = int.Parse(match.Groups["goal1"].Value);
+            var goalTeam2 = int.Parse(match.Groups["goal2"].Value);
+
+            if (!teams.ContainsKey(team1))
+            {
+                teams[team1] = new Legue();
+            }
+
+            if (!teams.ContainsKey(team2))
+            {
+                teams[team2] = new Legue();
+            }
+
+            if (goalTeam1 > goalTeam2)
+            {
+                teams[team1].Points += 3;
+            }
+            else if (goalTeam1 < goalTeam2)
+            {
+                teams[team2].Points += 3;
+            }
+            else
+            {
+                teams[team1].Points += 1;
+                teams[team2].Points += 1;
+            }
+
+            teams[team1].Goals += goalTeam1;
+            teams[team2].Goals += goalTeam2;
+        }
+
+        Console.WriteLine("League standings:");
+
+        int count = 1;
+        foreach (var team in teams.OrderByDescending(x => x.Value.Points).ThenBy(x => x.Key))
+        {
+            Console.WriteLine($"{count++}. {team.Key} {team.Value.Points}");
+        }
+
+        Console.WriteLine("Top 3 scored goals:");
+
+        foreach (var item in teams.OrderByDescending(x => x.Value.Goals).ThenBy(x => x.Key).Take(3))
+        {
+            Console.WriteLine($"- {item.Key} -> {item.Value.Goals}");
+        }
+    }
+}
+
+class Legue
+{
+    public int Points { get; set; }
+    public int Goals { get; set; }
+}
