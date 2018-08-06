@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+class Startup
+{
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        BigInteger highestSnowballValue = 0;
+        string input = string.Empty;
+
+        for (int i = 0; i < n; i++)
+        {
+            double snowballSnow = double.Parse(Console.ReadLine());
+            double snowballTime = double.Parse(Console.ReadLine());
+            int snowballQuality = int.Parse(Console.ReadLine());
+
+            BigInteger result = (BigInteger)snowballSnow / (BigInteger)snowballTime;
+            result = BigInteger.Pow(result, snowballQuality);
+
+
+            if (highestSnowballValue < result)
+            {
+                highestSnowballValue = result;
+                input = string.Format($"{snowballSnow} : {snowballTime} = {highestSnowballValue} ({snowballQuality})");
+            }
+        }
+
+        Console.WriteLine(input);
+    }
+}
+
+
