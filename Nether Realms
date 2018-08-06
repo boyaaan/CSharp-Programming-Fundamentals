@@ -1,0 +1,77 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+
+class Program
+{
+    static void Main()
+    {
+        var input = Console.ReadLine()
+            .Split(" ,".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+            .ToList();
+
+        string digitLettersPatern = @"(-?\d+\.?\d*)|([^0-9.*+-/ ])";
+       
+        var demons = new SortedDictionary<string, Digit>();
+
+        foreach (var currInput in input)
+        {
+            MatchCollection digitsLetters = Regex.Matches(currInput, digitLettersPatern);
+
+            int health = 0;
+            double damage = 0;
+            foreach (Match currInput1 in digitsLetters)
+            {
+                if (currInput1.Groups[1].Success)
+                {
+                    damage += double.Parse(currInput1.Value);
+
+                }
+                else
+                {
+                    health += Convert.ToChar(currInput1.ToString());
+                }
+            }
+
+            var multiplay = currInput.Where(x => x == '*' || x == '/');
+            //var multiplay = Regex.Match(currInput, multiplayPattern).ToString().ToList();
+
+            foreach (var item in multiplay)
+            {
+                if (item == '*')
+                {
+                    damage *= 2;
+                }
+                else if (item == '/')
+                {
+                    damage /= 2;
+                }
+
+            }
+
+            demons.Add(currInput, new Digit
+            {
+                Health = health,
+                Damage = damage
+            });
+        }
+        
+        foreach (var demon in demons)
+        {
+            var result = demon.Value;
+            Console.WriteLine("{0} - {1} health, {2:F2} damage", demon.Key, result.Health, result.Damage);
+        }
+    }
+}
+
+class Digit
+{
+    public int Health { get; set; }
+
+    public double Damage { get; set; }
+}
+
