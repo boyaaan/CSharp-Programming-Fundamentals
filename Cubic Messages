@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+
+class Program
+{
+    static void Main()
+    {
+        string input = string.Empty;
+        while ((input = Console.ReadLine()) != "Over!")
+        {
+            int n = int.Parse(Console.ReadLine());
+
+            var pattern = @"^(?<digits1>\d+)(?<message>[a-zA-Z]+)(?<digits2>[^a-zA-Z]+)?$";
+
+            var match = Regex.Match(input, pattern);
+
+            if (!match.Success)
+            {
+                continue;
+            }
+
+            var digits1 = match.Groups["digits1"].Value;
+            var message = match.Groups["message"].Value.ToString().ToArray();
+            var digits2 = match.Groups["digits2"].Value;
+
+            var allDigits = digits1 + digits2;
+
+            StringBuilder concatMassege = new StringBuilder();
+
+            if (message.Length <= n && message.Length >= 0)
+            {
+                foreach (var digit in allDigits)
+                {
+                    int num = 0;
+                    if (int.TryParse(digit.ToString(), out num) && num < message.Length && num >= 0)
+                    {
+                        concatMassege.Append(message[num]);
+                    }
+                    else
+                    {
+                        concatMassege.Append(" ");
+                    }
+                }
+            }
+            else
+            {
+                continue;
+            }
+
+            Console.WriteLine($"{string.Join("",message)} == {concatMassege}");
+        }
+    }
+}
+
