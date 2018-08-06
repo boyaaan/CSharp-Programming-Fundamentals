@@ -1,0 +1,78 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+class Startup
+{
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        var attachedPlaned = new List<string>();
+        var destroyedPlaned = new List<string>();
+
+
+
+        for (int i = 0; i < n; i++)
+        {
+            string input = Console.ReadLine();
+
+            int countLetters = 0;
+
+            foreach (var letter in input)
+            {
+                if (letter == 'a' || letter == 'A' ||
+                    letter == 't' || letter == 'T' ||
+                    letter == 's' || letter == 'S' ||
+                    letter == 'r' || letter == 'R')
+                {
+                    countLetters++;
+                }
+            }
+
+            string starEnigma = string.Empty;
+
+            foreach (var letter in input)
+            {
+                char enigmaLetter = Convert.ToChar(letter - countLetters);
+                starEnigma = starEnigma + "" + enigmaLetter;
+            }
+
+            var regex = Regex.Match(starEnigma, @".*?@(?<name>[a-zA-Z]+)[^@!:->]*:(?<population>\d+)[^@!:->]*!(?<type>[AD])![^@!:->]*->(?<soldier>\d)+");
+
+            if (regex.Success)
+            {
+                if (regex.Groups["type"].Value == "A")
+                {
+                    attachedPlaned.Add(regex.Groups["name"].Value);
+                }
+                else if (regex.Groups["type"].Value == "D")
+                {
+                    destroyedPlaned.Add(regex.Groups["name"].Value);
+                }
+            }
+        }
+
+        Console.WriteLine("Attacked planets: {0}", attachedPlaned.Count);
+
+        foreach (var item in attachedPlaned.OrderBy(x => x))
+        {
+            Console.WriteLine($"-> {item}");
+        }
+
+        Console.WriteLine("Destroyed planets: {0}", destroyedPlaned.Count);
+
+        foreach (var item in destroyedPlaned.OrderBy(x => x))
+        {
+            Console.WriteLine($"-> {item}");
+        }
+    }
+}
+
+
