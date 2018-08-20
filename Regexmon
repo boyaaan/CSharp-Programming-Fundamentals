@@ -1,0 +1,53 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+class Startup
+{
+    static void Main()
+    {
+        string patternPokeWords = @"(?<pokeWords>[a-zA-Z]+\-[a-zA-Z]+)";
+        var patternDidmon = @"(?<didmon>([^a-zA-Z-]+))";
+
+        string input = Console.ReadLine();
+
+        int index = 0;
+        while (index >= 0)
+        {
+            var matchDidmon = Regex.Match(input, patternDidmon);
+
+            if (matchDidmon.Success)
+            {
+                Console.WriteLine(matchDidmon.Value.ToString());
+            }
+            else
+            {
+                break;
+            }
+
+            index = input.IndexOf(matchDidmon.Value.ToString());
+            input = input.Substring(index + matchDidmon.Length);
+
+            var matchPokewords = Regex.Match(input, patternPokeWords);
+
+            if (matchPokewords.Success)
+            {
+                Console.WriteLine(matchPokewords.Value.ToString());
+            }
+            else
+            {
+                break;
+            }
+
+            index = input.IndexOf(matchPokewords.Value.ToString());
+            input = input.Substring(index + matchPokewords.Length);
+
+        }
+    }
+}
