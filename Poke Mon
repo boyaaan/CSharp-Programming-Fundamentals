@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+class Program
+{
+    static void Main()
+    {
+        List<long> sequenes = Console.ReadLine()
+            .Split()
+            .Select(long.Parse)
+            .ToList();
+
+        long sumRemuvetElemts = 0;
+
+        while (sequenes.Count > 0)
+        {
+            int index = int.Parse(Console.ReadLine());
+            long curNum = 0;
+
+            if (index >= sequenes.Count)
+            {
+                curNum = sequenes[sequenes.Count - 1];
+                sequenes[sequenes.Count - 1] = sequenes[0];
+            }
+            else if (index < 0)
+            {
+                curNum = sequenes[0];
+                sequenes[0] = sequenes[sequenes.Count - 1];
+            }
+            else
+            {
+                curNum = sequenes[index];
+                sequenes.RemoveAt(index);
+            }
+
+            sumRemuvetElemts += curNum;
+
+            for (int i = 0; i < sequenes.Count; i++)
+            {
+                if (sequenes[i] <= curNum)
+                {
+                    sequenes[i] += curNum;
+
+                }
+                else
+                {
+                    sequenes[i] -= curNum;
+
+                }
+            }
+        }
+
+        Console.WriteLine(sumRemuvetElemts);
+    }
+}
+
