@@ -1,0 +1,128 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+
+class Program
+{
+    static void Main()
+    {
+        var input = string.Empty;
+
+        var dataBase = new Dictionary<string, List<Data>>();
+
+        var id = "Messages";
+        var id1 = "Broadcasts";
+
+        dataBase[id1] = new List<Data>();
+        dataBase[id] = new List<Data>();
+
+        while ((input = Console.ReadLine()) != "Hornet is Green")
+        {
+            var currMassage = @"^(?<massageFirst>[0-9]+) <-> (?<massageSecond>[a-zA-Z0-9]+|[0-9]+)$";
+            var currBroadcasts = @"^(?<firstBroadcasts>[^0-9]+) <-> (?<secondoBroadcasts>[a-zA-Z0-9]+|[0-9]+)$";
+
+            var matchMassage = Regex.Match(input, currMassage);
+            var matchBroadcasts = Regex.Match(input, currBroadcasts);
+
+
+            if (matchMassage.Success)
+            {
+
+                var first = new string(matchMassage.Groups["massageFirst"].Value.Reverse().ToArray());
+                var second = new string(matchMassage.Groups["massageSecond"].Value.ToArray());
+
+                var data = new Data
+                {
+                    First = first,
+                    Second = second,
+                };
+
+                if (!dataBase.ContainsKey(id))
+                {
+                    dataBase[id] = new List<Data>();
+                }
+                dataBase[id].Add(data);
+
+            }
+            else if (matchBroadcasts.Success)
+            {
+
+                var first = new string(matchBroadcasts.Groups["firstBroadcasts"].Value.ToString().ToArray());
+                var second = new string(matchBroadcasts.Groups["secondoBroadcasts"].Value.ToCharArray());
+                var currSecond = "";
+
+                for (int i = 0; i < second.Length; i++)
+                {
+                    if (!char.IsDigit(second[i]))
+                    {
+
+                        if (char.IsLower(second[i]))
+                        {
+                            currSecond += second[i].ToString().ToUpper();
+                        }
+                        else
+                        {
+                            currSecond += second[i].ToString().ToLower();
+                        }
+                    }
+                    else
+                    {
+                        currSecond += second[i].ToString();
+                        continue;
+                    }
+
+                }
+
+                var data = new Data
+                {
+                    First = currSecond,
+                    Second = first,
+                };
+
+                if (!dataBase.ContainsKey(id))
+                {
+                    dataBase[id] = new List<Data>();
+                }
+                dataBase[id1].Add(data);
+
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+
+        foreach (var item in dataBase)
+        {
+            if (item.Value.Count == 0)
+            {
+                Console.WriteLine($"{item.Key}:");
+                Console.WriteLine("None");
+                continue;
+            }
+
+            Console.WriteLine($"{item.Key}:");
+
+            foreach (var item1 in item.Value)
+            {
+                Console.WriteLine($"{item1.First} -> {item1.Second}");
+            }
+
+
+        }
+    }
+}
+
+class Data
+{
+
+    public string First { get; set; }
+
+    public string Second { get; set; }
+}
+
