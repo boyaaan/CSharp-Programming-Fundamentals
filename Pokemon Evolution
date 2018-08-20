@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+class Startup
+{
+    static void Main()
+    {
+        var pokemons = new Dictionary<string, List<TypeIndex>>();
+
+        string input = string.Empty;
+        while ((input = Console.ReadLine()) != "wubbalubbadubdub")
+        {
+            var curInput = input
+                .Split("-> ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
+            var name = curInput[0];
+
+
+            if (curInput.Count > 1)
+            {
+                var type = curInput[1];
+                var index = int.Parse(curInput[2]);
+
+                if (!pokemons.ContainsKey(name))
+                {
+                    pokemons[name] = new List<TypeIndex>();
+                }
+
+                var typeIndex = new TypeIndex();
+
+                typeIndex.Type = type;
+                typeIndex.Index = index;
+
+                pokemons[name].Add(typeIndex);
+
+            }
+            else
+            {
+
+                foreach (var pokemon in pokemons)
+                {
+                    if (pokemon.Key == name)
+                    {
+                        Console.WriteLine($"# {pokemon.Key}");
+
+                        foreach (var item in pokemon.Value)
+                        {
+                            Console.WriteLine($"{item.Type} <-> {item.Index}");
+                        }
+                    }
+                }
+            }
+
+        }
+
+        foreach (var pokemon in pokemons)
+        {
+            Console.WriteLine($"# {pokemon.Key}");
+
+            foreach (var item in pokemon.Value.OrderByDescending(x => x.Index))
+            {
+                Console.WriteLine($"{item.Type} <-> {item.Index}");
+            }
+        }
+
+    }
+}
+
+class TypeIndex
+{
+    public string Type { get; set; }
+    public int Index { get; set; }
+}
