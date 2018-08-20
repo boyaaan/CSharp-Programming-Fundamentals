@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+class Program
+{
+    static void Main()
+    {
+        var beehives = Console.ReadLine()
+            .Split()
+            .Select(long.Parse)
+            .ToList();
+
+        var hornets = Console.ReadLine()
+            .Split()
+            .Select(long.Parse)
+            .ToList();
+
+        for (int i = 0; i < beehives.Count; i++)
+        {
+            long sumHornets = hornets.Sum();
+
+            if (beehives[i] >= sumHornets)
+            {
+                beehives[i] -= sumHornets;
+                hornets.RemoveAt(0);
+            }
+            else
+            {
+                beehives[i] = 0;
+            }
+
+            if (hornets.Count == 0)
+            {
+                break;
+            }
+        }
+
+        if (beehives.Any(x => x > 0))
+        {
+            for (int i = 0; i < beehives.Count; i++)
+            {
+                if (beehives[i] > 0)
+                {
+                    Console.Write("{0} ", beehives[i]);
+                }
+            }
+            Console.WriteLine();
+        }
+        else
+        {
+            foreach (var hornet in hornets)
+            {
+                Console.Write("{0} ", hornet);
+            }
+        }
+    }
+}
+
