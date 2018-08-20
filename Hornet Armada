@@ -1,0 +1,79 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+class Program
+{
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        var dict = new Dictionary<string, Dictionary<string, long>>();
+        var activityName = new Dictionary<string, long>();
+
+        for (int i = 0; i < n; i++)
+        {
+            var input = Console.ReadLine()
+                .Split(" =->:".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
+            var activity = long.Parse(input[0]);
+            var item = input[1];
+            var soldierType = input[2];
+            var soldierCount = long.Parse(input[3]);
+
+
+            if (!dict.ContainsKey(item))
+            {
+                dict[item] = new Dictionary<string, long>();
+                activityName[item] = activity;
+            }
+
+            if (!dict[item].ContainsKey(soldierType))
+            {
+                dict[item][soldierType] = 0;
+            }
+
+            dict[item][soldierType] += soldierCount;
+
+            if (activityName[item] < activity)
+            {
+                activityName[item] = activity;
+
+            }
+        }
+
+        var command = Console.ReadLine().Split(@"\".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToArray();
+
+        if (command.Length > 1)
+        {
+            var currActivity = long.Parse(command[0]);
+            var currType = command[1];
+
+            foreach (var item in dict.Where(x => x.Value.ContainsKey(currType))
+     .OrderByDescending(x => x.Value[currType]))
+            {
+                if (activityName[item.Key] < currActivity && dict[item.Key].ContainsKey(currType))
+                {
+                    Console.WriteLine($"{item.Key} -> {dict[item.Key][currType]}");
+                }
+            }
+        }
+        else
+        {
+            var currentSoldierType = command[0];
+
+            foreach (var legion in activityName.OrderByDescending(x => x.Value))
+            {
+                if (dict[legion.Key].ContainsKey(currentSoldierType))
+                {
+                    Console.WriteLine($"{legion.Value} : {legion.Key}");
+                }
+            }
+        }
+
+    }
+}
