@@ -38,7 +38,6 @@ class Startup
                 char enigmaLetter = Convert.ToChar(letter - countLetters);
                 starEnigma = starEnigma + "" + enigmaLetter;
             }
-
             var regex = Regex.Match(starEnigma, @".*?@(?<name>[a-zA-Z]+)[^@!:->]*:(?<population>\d+)[^@!:->]*!(?<type>[AD])![^@!:->]*->(?<soldier>\d)+");
 
             if (regex.Success)
@@ -53,14 +52,12 @@ class Startup
                 }
             }
         }
-
         Console.WriteLine("Attacked planets: {0}", attachedPlaned.Count);
 
         foreach (var item in attachedPlaned.OrderBy(x => x))
         {
             Console.WriteLine($"-> {item}");
         }
-
         Console.WriteLine("Destroyed planets: {0}", destroyedPlaned.Count);
 
         foreach (var item in destroyedPlaned.OrderBy(x => x))
