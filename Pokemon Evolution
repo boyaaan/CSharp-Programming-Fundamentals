@@ -13,8 +13,8 @@ class Startup
     static void Main()
     {
         var pokemons = new Dictionary<string, List<TypeIndex>>();
-
         string input = string.Empty;
+        
         while ((input = Console.ReadLine()) != "wubbalubbadubdub")
         {
             var curInput = input
@@ -22,7 +22,6 @@ class Startup
                 .ToList();
 
             var name = curInput[0];
-
 
             if (curInput.Count > 1)
             {
@@ -40,11 +39,9 @@ class Startup
                 typeIndex.Index = index;
 
                 pokemons[name].Add(typeIndex);
-
             }
             else
             {
-
                 foreach (var pokemon in pokemons)
                 {
                     if (pokemon.Key == name)
@@ -58,7 +55,6 @@ class Startup
                     }
                 }
             }
-
         }
 
         foreach (var pokemon in pokemons)
@@ -70,7 +66,6 @@ class Startup
                 Console.WriteLine($"{item.Type} <-> {item.Index}");
             }
         }
-
     }
 }
 
