@@ -36,7 +36,6 @@ class Program
                 curNum = sequenes[index];
                 sequenes.RemoveAt(index);
             }
-
             sumRemuvetElemts += curNum;
 
             for (int i = 0; i < sequenes.Count; i++)
@@ -44,16 +43,13 @@ class Program
                 if (sequenes[i] <= curNum)
                 {
                     sequenes[i] += curNum;
-
                 }
                 else
                 {
                     sequenes[i] -= curNum;
-
                 }
             }
         }
-
         Console.WriteLine(sumRemuvetElemts);
     }
 }
