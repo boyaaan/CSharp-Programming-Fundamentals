@@ -26,7 +26,6 @@ class Startup
                 if (!playerPool.ContainsKey(name))
                 {
                     playerPool[name] = new Dictionary<string, long>();
-
                 }
 
                 if (!playerPool[name].ContainsKey(position))
@@ -38,11 +37,8 @@ class Startup
                     if (playerPool[name][position] < skill)
                     {
                         playerPool[name][position] = skill;
-
                     }
                 }
-
-
             }
             else
             {
@@ -71,7 +67,6 @@ class Startup
                                 {
                                     playerToRemove = name1;
                                 }
-
                             }
                         }
                     }
@@ -79,7 +74,6 @@ class Startup
                 }
             }
         }
-
         
         foreach (var player in playerPool.OrderByDescending(x => x.Value.Values.Sum()).ThenBy(x => x.Key))
         {
