@@ -12,14 +12,12 @@ class Program
     static void Main()
     {
         int n = int.Parse(Console.ReadLine());
-
         var dna = new List<List<int>>();
 
         string input = string.Empty;
         while ((input = Console.ReadLine()) != "Clone them!")
         {
             var curInput = input.Split("!".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
-
             dna.Add(curInput);
         }
 
