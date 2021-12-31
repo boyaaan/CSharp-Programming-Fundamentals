@@ -13,14 +13,15 @@ class Program
     {
         var dwarfs = new Dictionary<string, int>();
         string input = Console.ReadLine();
+        
         while (input != "Once upon a time")
         {
             string[] inputs = input.Split(new string[] { " <:> " }, StringSplitOptions.None);
             string name = inputs[0];
             string color = inputs[1];
             int physics = int.Parse(inputs[2]);
-
             string Id = name + ":" + color;
+            
             if (!dwarfs.ContainsKey(Id))
             {
                 dwarfs.Add(Id, physics);
@@ -29,7 +30,6 @@ class Program
             {
                 dwarfs[Id] = Math.Max(dwarfs[Id], physics);
             }
-
             input = Console.ReadLine();
         }
         foreach (var dwarf in dwarfs
