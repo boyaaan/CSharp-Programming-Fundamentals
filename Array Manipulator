@@ -9,7 +9,6 @@ class Program
 {
     static void Main()
     {
-
         int[] nums = Console.ReadLine()
             .Split()
             .Select(int.Parse)
@@ -19,14 +18,12 @@ class Program
         while ((input = Console.ReadLine()) != "end")
         {
             var currInput = input.Split().ToArray();
-
             var command = currInput[0];
 
             switch (command)
             {
                 case "exchange":
                     var indexExchange = int.Parse(currInput[1]);
-
                     nums = ExchangeArrayElement(nums, indexExchange);
                     break;
 
@@ -34,9 +31,7 @@ class Program
                 case "min":
                     var maxOrMin = command;
                     var evenOrOdd = currInput[1];
-
                     FindElementsEvenOdd(nums, maxOrMin, evenOrOdd);
-                    
                     break;
 
                 case "first":
@@ -44,15 +39,12 @@ class Program
                     var firstOrLast = command;
                     var count = int.Parse(currInput[1]);
                     var evenOddFirstLast = currInput[2];
-
                     FindFirstLastIndex(nums, firstOrLast, count, evenOddFirstLast);
-
                     break;
             }
         }
 
         Console.WriteLine("[{0}]", string.Join(", ", nums));
-
     }
 
     static int[] ExchangeArrayElement(int[] nums, int indexExchange)
@@ -66,11 +58,9 @@ class Program
 
         var leftIndex = nums.Take(indexExchange + 1);
         var rightIndex = nums.Skip(indexExchange + 1);
-
         var concatArray = rightIndex.Concat(leftIndex).ToArray();
 
         return concatArray;
-
     }
 
     static void FindElementsEvenOdd(int[] nums, string maxOrMin, string evenOrOddMaxMin)
@@ -88,8 +78,6 @@ class Program
             var index = Array.LastIndexOf(nums, maxOrMinElement);
             Console.WriteLine(index);
         }
-
-
     }
 
     static void FindFirstLastIndex(int[] nums, string firstOrLast, int count, string evenOddFirstLast)
