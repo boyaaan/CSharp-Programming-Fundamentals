@@ -13,7 +13,6 @@ class Startup
     static void Main()
     {
         int size = int.Parse(Console.ReadLine());
-
         var fild = new int[size];
 
              Console.ReadLine()
@@ -49,7 +48,6 @@ class Startup
             {
                 continue;
             }
-
             fild[startInndex] = 0;
             var curStartIndex = startInndex;
 
