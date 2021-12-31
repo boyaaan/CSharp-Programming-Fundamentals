@@ -71,7 +71,6 @@ class Startup
                     fild[curStartIndex] = 1;
                     break;
                 }
-                
             }
         }
         Console.WriteLine(string.Join(" ",fild));
