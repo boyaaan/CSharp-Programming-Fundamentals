@@ -13,16 +13,12 @@ class Startup
     static void Main()
     {
         int n = int.Parse(Console.ReadLine());
-
         var attachedPlaned = new List<string>();
         var destroyedPlaned = new List<string>();
-
-
 
         for (int i = 0; i < n; i++)
         {
             string input = Console.ReadLine();
-
             int countLetters = 0;
 
             foreach (var letter in input)
@@ -35,7 +31,6 @@ class Startup
                     countLetters++;
                 }
             }
-
             string starEnigma = string.Empty;
 
             foreach (var letter in input)
