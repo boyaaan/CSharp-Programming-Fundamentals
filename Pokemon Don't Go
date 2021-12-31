@@ -38,7 +38,6 @@ class Startup
                 curNum = sequences[index];
                 sequences.RemoveAt(index);
             }
-
             sumOfDeletedNums += curNum;
 
             for (int i = 0; i < sequences.Count; i++)
