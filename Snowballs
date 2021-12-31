@@ -13,7 +13,6 @@ class Startup
     static void Main()
     {
         int n = int.Parse(Console.ReadLine());
-
         BigInteger highestSnowballValue = 0;
         string input = string.Empty;
 
@@ -22,10 +21,8 @@ class Startup
             double snowballSnow = double.Parse(Console.ReadLine());
             double snowballTime = double.Parse(Console.ReadLine());
             int snowballQuality = int.Parse(Console.ReadLine());
-
             BigInteger result = (BigInteger)snowballSnow / (BigInteger)snowballTime;
             result = BigInteger.Pow(result, snowballQuality);
-
 
             if (highestSnowballValue < result)
             {
@@ -33,7 +30,6 @@ class Startup
                 input = string.Format($"{snowballSnow} : {snowballTime} = {highestSnowballValue} ({snowballQuality})");
             }
         }
-
         Console.WriteLine(input);
     }
 }
