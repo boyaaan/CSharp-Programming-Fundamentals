@@ -15,21 +15,19 @@ class Program
             .ToList();
 
         string digitLettersPatern = @"(-?\d+\.?\d*)|([^0-9.*+-/ ])";
-       
         var demons = new SortedDictionary<string, Digit>();
 
         foreach (var currInput in input)
         {
             MatchCollection digitsLetters = Regex.Matches(currInput, digitLettersPatern);
-
             int health = 0;
             double damage = 0;
+            
             foreach (Match currInput1 in digitsLetters)
             {
                 if (currInput1.Groups[1].Success)
                 {
                     damage += double.Parse(currInput1.Value);
-
                 }
                 else
                 {
@@ -50,7 +48,6 @@ class Program
                 {
                     damage /= 2;
                 }
-
             }
 
             demons.Add(currInput, new Digit
