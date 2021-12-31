@@ -16,9 +16,9 @@ class Startup
         decimal lightSebrasPrice = decimal.Parse(Console.ReadLine());
         decimal robesPrice = decimal.Parse(Console.ReadLine());
         decimal beltsPrice = decimal.Parse(Console.ReadLine());
-
         decimal lightSebrasTenPorsentMore = Math.Ceiling(studentsCount * 0.10m);
         int freeBelts = studentsCount / 6;
+        
         decimal total = (lightSebrasPrice * (studentsCount + lightSebrasTenPorsentMore)) + (robesPrice * studentsCount) + (beltsPrice * (studentsCount - freeBelts));
 
         if (total > amountMoney)
@@ -30,7 +30,5 @@ class Startup
         {
             Console.WriteLine($"The money is enough - it would cost {total:f2}lv.");
         }
-
     }
-        
 }
