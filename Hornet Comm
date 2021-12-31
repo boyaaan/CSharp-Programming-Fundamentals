@@ -11,12 +11,9 @@ class Program
     static void Main()
     {
         var input = string.Empty;
-
         var dataBase = new Dictionary<string, List<Data>>();
-
         var id = "Messages";
         var id1 = "Broadcasts";
-
         dataBase[id1] = new List<Data>();
         dataBase[id] = new List<Data>();
 
@@ -24,14 +21,11 @@ class Program
         {
             var currMassage = @"^(?<massageFirst>[0-9]+) <-> (?<massageSecond>[a-zA-Z0-9]+|[0-9]+)$";
             var currBroadcasts = @"^(?<firstBroadcasts>[^0-9]+) <-> (?<secondoBroadcasts>[a-zA-Z0-9]+|[0-9]+)$";
-
             var matchMassage = Regex.Match(input, currMassage);
             var matchBroadcasts = Regex.Match(input, currBroadcasts);
 
-
             if (matchMassage.Success)
             {
-
                 var first = new string(matchMassage.Groups["massageFirst"].Value.Reverse().ToArray());
                 var second = new string(matchMassage.Groups["massageSecond"].Value.ToArray());
 
@@ -50,7 +44,6 @@ class Program
             }
             else if (matchBroadcasts.Success)
             {
-
                 var first = new string(matchBroadcasts.Groups["firstBroadcasts"].Value.ToString().ToArray());
                 var second = new string(matchBroadcasts.Groups["secondoBroadcasts"].Value.ToCharArray());
                 var currSecond = "";
@@ -59,7 +52,6 @@ class Program
                 {
                     if (!char.IsDigit(second[i]))
                     {
-
                         if (char.IsLower(second[i]))
                         {
                             currSecond += second[i].ToString().ToUpper();
@@ -74,7 +66,6 @@ class Program
                         currSecond += second[i].ToString();
                         continue;
                     }
-
                 }
 
                 var data = new Data
@@ -88,15 +79,13 @@ class Program
                     dataBase[id] = new List<Data>();
                 }
                 dataBase[id1].Add(data);
-
             }
             else
             {
                 continue;
             }
         }
-
-
+        
         foreach (var item in dataBase)
         {
             if (item.Value.Count == 0)
@@ -112,15 +101,12 @@ class Program
             {
                 Console.WriteLine($"{item1.First} -> {item1.Second}");
             }
-
-
         }
     }
 }
 
 class Data
 {
-
     public string First { get; set; }
 
     public string Second { get; set; }
