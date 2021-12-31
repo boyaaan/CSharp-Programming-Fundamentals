@@ -25,7 +25,6 @@ class Program
             var soldierType = input[2];
             var soldierCount = long.Parse(input[3]);
 
-
             if (!dict.ContainsKey(item))
             {
                 dict[item] = new Dictionary<string, long>();
@@ -42,7 +41,6 @@ class Program
             if (activityName[item] < activity)
             {
                 activityName[item] = activity;
-
             }
         }
 
